@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Charger le script externe
-                    def gv = load "script.groovy"
+                    def gv = load "/home/oliver/jenkins/script.groovy"
                 }
             }
         }
