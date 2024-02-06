@@ -2,39 +2,21 @@ pipeline {
     agent any
 
     stages {
-        stage("Init") {
-            steps {
-                script {
-                    // Charger le script externe
-                    def gv = load "/home/oliver/jenkins/script.groovy"
-                }
-            }
-        }
-
         stage("Build") {
             steps {
-                script {
-                    // Appeler la fonction buildApp() chargée depuis script.groovy
-                    gv.buildApp()
-                }
+                sh 'echo "Building the application"'
             }
         }
 
         stage("Test") {
             steps {
-                script {
-                    // Appeler la fonction testApp() chargée depuis script.groovy
-                    gv.testApp()
-                }
+                sh 'echo "Testing the application"'
             }
         }
 
         stage("Deploy") {
             steps {
-                script {
-                    // Appeler la fonction deployApp() chargée depuis script.groovy
-                    gv.deployApp()
-                }
+                sh 'echo "Deploying on production"'
             }
         }
     }
