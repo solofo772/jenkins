@@ -1,13 +1,11 @@
-def buildApp(){
-    echo 'building the application'
+def buildApp() {
+    echo 'Building the application'
 }
 
-def testApp(){
-    echo 'testing the application'
+def testApp() {
+    echo 'Testing the application'
 }
 
-def deployApp(){
-    echo 'deploy on production'
+def deployApp() {
+    echo 'Deploying on production'
 }
-
-return this

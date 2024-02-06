@@ -1,37 +1,41 @@
-def gv
-pipeline{
+pipeline {
     agent any
+
     stages {
-        stage("init"){
-            steps{
-                script{
-                    gv = load "script.groovy"
+        stage("Init") {
+            steps {
+                script {
+                    // Charger le script externe
+                    def gv = load "script.groovy"
                 }
             }
         }
 
-        stage("build"){
-            steps{
-                script{
-                    gv.buildApp
+        stage("Build") {
+            steps {
+                script {
+                    // Appeler la fonction buildApp() chargée depuis script.groovy
+                    gv.buildApp()
                 }
             }
         }
-        stage("test"){
-            steps{
-/*                echo 'testing the application'*/
-                script{
-                    gv.testApp
+
+        stage("Test") {
+            steps {
+                script {
+                    // Appeler la fonction testApp() chargée depuis script.groovy
+                    gv.testApp()
                 }
             }
         }
-        stage("deploy"){
-            steps{
-                script{
-                    gv.deployApp
+
+        stage("Deploy") {
+            steps {
+                script {
+                    // Appeler la fonction deployApp() chargée depuis script.groovy
+                    gv.deployApp()
                 }
             }
         }
     }
-
 }
