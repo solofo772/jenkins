@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_USERNAME = 'solofonore'
         REGISTRE = 'solofonore/html'
         DOCKER_IMAGE = "${REGISTRE}:version-${env.BUILD_ID}"
         VERSION_FILE = 'version.txt'
@@ -13,53 +12,54 @@ pipeline {
     stages {
         stage('Clonage du dépôt') {
             steps {
-                git branch: 'main', url: 'https://github.com/solofo772/jenkins.git'
+                sh 'git branch main'
+                sh 'git url https://github.com/solofo772/jenkins.git'
             }
         }
 
         stage('Récupération de la version') {
             steps {
-                script {
-                    if (fileExists(VERSION_FILE)) {
-                        VERSION_NUMBER = readFile(VERSION_FILE).trim()
-                    } else {
-                        VERSION_NUMBER = DEFAULT_VERSION
-                    }
-                }
+                sh '''
+                    if [ -f "${VERSION_FILE}" ]; then
+                        VERSION_NUMBER=$(cat "${VERSION_FILE}" | tr -d '[:space:]')
+                    else
+                        VERSION_NUMBER="${DEFAULT_VERSION}"
+                    fi
+                '''
             }
         }
 
         stage('Construction de l\'image Docker') {
             steps {
-                script {
-                    docker.build("${DOCKER_IMAGE}", '.')
-                }
+                withCredentials([usernamePassword(credentialsID: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')])
+                  sh "docker build -t ${DOCKER_IMAGE} ."
+                  sh "echo $PASS | docker login -u $USER --password-stdin"
             }
         }
 
         stage('Exécution de l\'image Docker') {
             steps {
-                script {
-                    docker.image("${DOCKER_IMAGE}").run('-p 80:80')
-                }
+                sh "docker run -d -p 80:80 ${DOCKER_IMAGE}"
             }
         }
 
         stage('Push de l\'image Docker vers Docker Hub') {
             steps {
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/${DOCKER_HUB_USERNAME}', 'docker-hub-repo') {
-                        docker.image("${DOCKER_IMAGE}").push('latest')
-                    }
-                }
+                sh "
+                    docker push ${DOCKER_IMAGE}
+                "
             }
         }
 
         stage('Affichage des conteneurs en cours d\'exécution') {
             steps {
-                script {
-                    sh "docker ps"
-                }
+                sh "docker ps"
+            }
+        }
+
+        stage('Affichage des informations sur l\'image Docker') {
+            steps {
+                sh "docker images ${REGISTRE}"
             }
         }
     }
