@@ -45,6 +45,16 @@ pipeline {
             }
         }
 
+        stage('Push de l\'image Docker vers Docker Hub') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS) {
+                        docker.image("${DOCKER_IMAGE}").push('latest')
+                    }
+                }
+            }
+        }
+
         stage('Affichage des conteneurs en cours d\'exécution') {
             steps {
                 script {
