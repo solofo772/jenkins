@@ -11,14 +11,18 @@ pipeline {
     stages {
         stage('Clonage du dépôt') {
             steps {
-                git 'https://github.com/solofo772/jenkins.git'
+                git clone 'https://github.com/solofo772/jenkins.git'
             }
         }
 
         stage('Récupération de la version') {
             steps {
                 script {
-                    VERSION_NUMBER = readFile(VERSION_FILE).trim()
+                    if (fileExists(VERSION_FILE)) {
+                        VERSION_NUMBER = readFile(VERSION_FILE).trim()
+                    } else {
+                        VERSION_NUMBER = DEFAULT_VERSION
+                    }
                 }
             }
         }
