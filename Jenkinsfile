@@ -40,7 +40,7 @@ pipeline {
         stage('Authentification Docker Hub') {
             steps {
                 script {
-                    /*docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS)*/ {
+                    {
                         docker.image("${DOCKER_IMAGE}").run('-p 80:80')
                         docker.ps
                     }
