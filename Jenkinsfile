@@ -6,6 +6,7 @@ pipeline {
         DOCKER_PASSWORD = 'Honoré61311'
         DOCKER_IMAGE = 'solofonore/html'
         VERSION_FILE = 'version.txt'
+        DEFAULT_VERSION = '1'
     }
 
     stages {
