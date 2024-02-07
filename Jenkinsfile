@@ -37,16 +37,14 @@ pipeline {
             }
         }
 
-        stage('Authentification Docker Hub') {
+        stage('Exécution de l\'image Docker') {
             steps {
                 script {
-                    {
-                        docker.image("${DOCKER_IMAGE}").run('-p 80:80')
-                        docker.ps
-                    }
+                    docker.image("${DOCKER_IMAGE}").run('-p 80:80')
                 }
             }
         }
+
         stage('Affichage des conteneurs en cours d\'exécution') {
             steps {
                 script {
