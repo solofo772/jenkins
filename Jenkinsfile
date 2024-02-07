@@ -45,9 +45,7 @@ pipeline {
 
         stage('Push de l\'image Docker vers Docker Hub') {
             steps {
-                sh "
-                    docker push ${DOCKER_IMAGE}
-                "
+                sh "docker push ${DOCKER_IMAGE}"
             }
         }
 
