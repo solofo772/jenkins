@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_USERNAME = 'solofonore'
-        DOCKER_PASSWORD = 'Honoré61311'
+        DOCKER_CREDENTIALS = credentials('docker-hub-repo')
         DOCKER_IMAGE = 'solofonore/html'
         VERSION_FILE = 'version.txt'
         DEFAULT_VERSION = '1'
@@ -39,7 +38,7 @@ pipeline {
         stage('Authentification Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', [username: DOCKER_USERNAME, password: DOCKER_PASSWORD]) {
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS) {
                         docker.image("${DOCKER_IMAGE}:${VERSION_NUMBER}").push('latest')
                     }
                 }
