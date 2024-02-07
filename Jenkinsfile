@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_USERNAME = credentials('DOCKER_USERNAME')
-        DOCKER_PASSWORD = credentials('DOCKER_PASSWORD')
+        DOCKER_USERNAME = 'solofonore'
+        DOCKER_PASSWORD = 'Honoré61311'
         DOCKER_IMAGE = 'solofonore/html'
         VERSION_FILE = 'version.txt'
     }
