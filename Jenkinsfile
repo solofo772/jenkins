@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Clonage du dépôt') {
             steps {
-                git 'https://github.com/solofo772/jenkins.git'
+                git branch: 'main', url: 'https://github.com/solofo772/jenkins.git'
             }
         }
 
