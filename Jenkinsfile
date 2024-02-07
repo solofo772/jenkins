@@ -19,13 +19,13 @@ pipeline {
 
         stage('Récupération de la version') {
             steps {
-                sh """
+                sh '''
                     if [ -f "${VERSION_FILE}" ]; then
                         VERSION_NUMBER=$(cat "${VERSION_FILE}" | tr -d '[:space:]')
                     else
                         VERSION_NUMBER="${DEFAULT_VERSION}"
                     fi
-                """
+                '''
             }
         }
 
