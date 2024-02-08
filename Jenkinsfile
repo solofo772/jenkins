@@ -34,7 +34,7 @@ pipeline {
                     sh "docker build -t ${DOCKER_IMAGE} ."
                     sh "echo $PASS | docker login -u $USER --password-stdin"
                     // Supprimer cette ligne si vous ne voulez pas pousser l'image Docker
-                    //sh "docker push ${DOCKER_IMAGE}"
+                    sh "docker push ${DOCKER_IMAGE}"
                 }
             }
         }
