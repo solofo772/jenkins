@@ -14,6 +14,7 @@ pipeline {
             steps {
                 sh "rm -R jenkins"
                 sh "git clone https://github.com/solofo772/jenkins.git"
+                sh "cd jenkins/"
             }
         }
 
@@ -29,25 +30,15 @@ pipeline {
             }
         }
 
-        stage('Construction de l\'image Docker') {
-            steps {
-                withCredentials([usernamePassword(credentialsID: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')])
-                  sh "cd jenkins/"
-                  sh "docker build -t ${DOCKER_IMAGE} ."
-                  sh "echo $PASS | docker login -u $USER --password-stdin"
-            }
-        }
+     stage('Construction de l\'image Docker') {
+        steps {
+           withCredentials([usernamePassword(credentialsID: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+            sh "docker build -t ${DOCKER_IMAGE} ."
+            sh "echo $PASS | docker login -u $USER --password-stdin"
+            sh "docker push ${DOCKER_IMAGE}"
+                                          }
+             }
+    }
 
-        stage('Push de l\'image Docker vers Docker Hub') {
-            steps {
-                sh "docker push ${DOCKER_IMAGE}"
-            }
-        }
-
-        stage('Affichage des conteneurs en cours d\'exécution') {
-            steps {
-                sh "docker images"
-            }
-        }
     }
 }
