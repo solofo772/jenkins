@@ -37,12 +37,6 @@ pipeline {
             }
         }
 
-        stage('Exécution de l\'image Docker') {
-            steps {
-                sh "docker run -d -p 80:80 ${DOCKER_IMAGE}"
-            }
-        }
-
         stage('Push de l\'image Docker vers Docker Hub') {
             steps {
                 sh "docker push ${DOCKER_IMAGE}"
@@ -51,13 +45,7 @@ pipeline {
 
         stage('Affichage des conteneurs en cours d\'exécution') {
             steps {
-                sh "docker ps"
-            }
-        }
-
-        stage('Affichage des informations sur l\'image Docker') {
-            steps {
-                sh "docker images ${REGISTRE}"
+                sh "docker images"
             }
         }
     }
