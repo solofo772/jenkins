@@ -30,9 +30,9 @@ pipeline {
 
         stage('Construction de l\'image Docker') {
             steps {
-                withCredentials([usernamePassword(credentialsID: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh "docker build -t ${DOCKER_IMAGE} ."
-                    //sh "echo $PASS | docker login -u $USER --password-stdin"
+                    sh "echo $PASS | docker login -u $USER --password-stdin"
                     // Supprimer cette ligne si vous ne voulez pas pousser l'image Docker
                     //sh "docker push ${DOCKER_IMAGE}"
                 }
