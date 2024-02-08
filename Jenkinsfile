@@ -32,7 +32,7 @@ pipeline {
         stage('Construction de l\'image Docker') {
             steps {
                 withCredentials([usernamePassword(credentialsID: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')])
-                  sh "cd jenkins"
+                  sh "cd jenkins/"
                   sh "docker build -t ${DOCKER_IMAGE} ."
                   sh "echo $PASS | docker login -u $USER --password-stdin"
             }
