@@ -67,10 +67,11 @@ pipeline {
                       git config --global user.name "solofo772"
                       git add ${manifestPath}/deployment.yaml
                       git commit -m "Update Deployment Manifest"
+                      git branch
                    
                     """
                     withCredentials([string(credentialsId: 'github_token', variable: 'GITHUB_TOKEN')]) {
-                      sh "git push https://$GITHUB_TOKEN@github.com/solofo772/jenkins.git"
+                      sh "git push https://$GITHUB_TOKEN@github.com/solofo772/jenkins.git HEAD:main"
                     }    
                 }
             }
