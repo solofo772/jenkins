@@ -4,6 +4,7 @@ pipeline {
     environment {
         REGISTRE = 'solofonore/html'
         DOCKER_IMAGE = "${REGISTRE}:version-${env.BUILD_ID}"
+    //  GITHU_TOKEN = credentials('github_token')
         VERSION_FILE = 'version.txt'
         DEFAULT_VERSION = '1'
         VERSION_NUMBER = ''
@@ -38,5 +39,39 @@ pipeline {
                 }
             }
         }
+        stage('Cleanup Artifacts'){
+            steps {
+                script {
+                    sh "docker rmi ${DOCKER_IMAGE}"
+                }
+            }
+        }
+        stage('Correction du fichier de déploiement') {
+            steps {
+                dir('manifest') {
+                sh 'cat deployment.yaml'
+                sh "sed -i 's|solofonore/html:latest|${DOCKER_IMAGE}|g' deployment.yaml"
+                sh 'cat deployment.yaml'
+                }
+            }
+        }
+
+
+        stage('Push the new change deployment to GIT'){
+            steps {
+                sh """
+                   git config --global user.name "solofo772"
+                   git config --global user.mail "solofonore@gmail.com"
+                   git add deployement.yaml
+                   git commit -m "Update Deployment Manifest"
+                   
+                """
+                withCredentials([string(credentialsId: 'github_token', variable: 'GITHUB_TOKEN')]) {
+                   sh "git push https://${GITHUB_TOKEN}@github.com/solofo772/jenkins.git"
+                }    
+            }
+        }
     }
 }
+
+//git push https://${github_token}@github.com/solofo772/jenkins.git
