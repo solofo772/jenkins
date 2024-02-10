@@ -46,16 +46,17 @@ pipeline {
                 }
             }
         }
-       stage('Correction du fichier de déploiement') {
+        stage('Correction du fichier de déploiement') {
             steps {
                 script {
-                   sh 'cd jenkins/manifest/'
-                   sh 'cat deployment.yaml'
-                   sh "sed -i 's|solofonore/html:latest|${DOCKER_IMAGE}|g' deployment.yaml"
-                   sh 'cat deployment.yaml'
-                }
+                   def manifestPath = "${pwd()}/manifest"
+                   sh "cat ${manifestPath}/deployment.yaml"
+                   sh "sed -i 's|solofonore/html:latest|${DOCKER_IMAGE}|g' ${manifestPath}/deployment.yaml"
+                   sh "cat ${manifestPath}/deployment.yaml"
+                } 
             }
         }
+
 
         stage('Push the new change deployment to GIT'){
             steps {
