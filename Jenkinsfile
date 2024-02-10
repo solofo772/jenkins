@@ -63,8 +63,8 @@ pipeline {
                 script {
                     def manifestPath = "${pwd()}/manifest"
                     sh """
+                      git config --global user.email "solofonore@gmail.com"
                       git config --global user.name "solofo772"
-                      git config --global user.mail "solofonore@gmail.com"
                       git add ${manifestPath}/deployment.yaml
                       git commit -m "Update Deployment Manifest"
                    
