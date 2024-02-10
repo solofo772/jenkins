@@ -70,7 +70,7 @@ pipeline {
                    
                     """
                     withCredentials([string(credentialsId: 'github_token', variable: 'GITHUB_TOKEN')]) {
-                      sh "git push https://${GITHUB_TOKEN}@github.com/solofo772/jenkins.git"
+                      sh "git push https://$GITHUB_TOKEN@github.com/solofo772/jenkins.git"
                     }    
                 }
             }
