@@ -60,10 +60,11 @@ pipeline {
 
         stage('Push the new change deployment to GIT'){
             steps {
+                def manifestPath = "${pwd()}/manifest"
                 sh """
                    git config --global user.name "solofo772"
                    git config --global user.mail "solofonore@gmail.com"
-                   git add deployement.yaml
+                   git add ${manifestPath}/deployment.yaml
                    git commit -m "Update Deployment Manifest"
                    
                 """
