@@ -60,17 +60,19 @@ pipeline {
 
         stage('Push the new change deployment to GIT'){
             steps {
-                def manifestPath = "${pwd()}/manifest"
-                sh """
-                   git config --global user.name "solofo772"
-                   git config --global user.mail "solofonore@gmail.com"
-                   git add ${manifestPath}/deployment.yaml
-                   git commit -m "Update Deployment Manifest"
+                script {
+                    def manifestPath = "${pwd()}/manifest"
+                    sh """
+                      git config --global user.name "solofo772"
+                      git config --global user.mail "solofonore@gmail.com"
+                      git add ${manifestPath}/deployment.yaml
+                      git commit -m "Update Deployment Manifest"
                    
-                """
-                withCredentials([string(credentialsId: 'github_token', variable: 'GITHUB_TOKEN')]) {
-                   sh "git push https://${GITHUB_TOKEN}@github.com/solofo772/jenkins.git"
-                }    
+                    """
+                    withCredentials([string(credentialsId: 'github_token', variable: 'GITHUB_TOKEN')]) {
+                      sh "git push https://${GITHUB_TOKEN}@github.com/solofo772/jenkins.git"
+                    }    
+                }
             }
         }
     }
