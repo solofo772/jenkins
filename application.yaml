@@ -6,15 +6,17 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://solofo772:Honor%C3%A961311@github.com/solofo772/jenkins.git
-    targetRevision: HEAD
-    path: manifest
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: myapp
-  syncPolicy:
-    syncOptions:
-      - CreateNamespace=true
-    automated:
-      selfHeal: true
-      prune: true
+    project: default
+source:
+  repoURL: 'https://github.com/solofo772/jenkins.git'
+  path: manifest
+  targetRevision: HEAD
+destination:
+  server: 'https://kubernetes.default.svc'
+  namespace: myapp
+syncPolicy:
+  automated:
+    prune: true
+  syncOptions:
+    - PruneLast=true
+    - CreateNamespace=true1   
