@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: html
-        image: solofonore/html:version-10
+        image: solofonore/html:version-6
         ports:
         - containerPort: 80
