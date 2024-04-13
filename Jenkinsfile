@@ -52,7 +52,7 @@ pipeline {
                 script {
                    def manifestPath = "${pwd()}/manifest"
                    sh "cat ${manifestPath}/deployment.yaml"
-                   sh "sed -i 's|solofonore/html:version-6|${DOCKER_IMAGE}|g' ${manifestPath}/deployment.yaml"
+                   sh "sed -i 's|solofonore/html:version-14|${DOCKER_IMAGE}|g' ${manifestPath}/deployment.yaml"
                    sh "cat ${manifestPath}/deployment.yaml"
                 } 
             }
